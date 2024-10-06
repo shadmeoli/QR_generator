@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>QR Code Generator</title>
+  </head>
+  <body>
+    <div
+      class="w-screen h-screen flex flex-col items-center justify-center space-y-4"
+      id="app"
+    >
+      <h1 class="text-3xl font-light tracking-tight">QR Code Generator</h1>
+
+      <input
+        class="w-60 h-12 bg-gray-100 p-2 rounded-xl"
+        type="text"
+        id="url-input"
+        placeholder="Enter URL"
+      />
+      <button
+        class="bg-blue-600 h-12 rounded-xl w-60 text-white"
+        id="generate-btn"
+      >
+        Generate QR Code
+      </button>
+
+      <canvas
+        class="h-[256px] w-[256px] p-4 border rounded-xl border-blue-600"
+        id="qr-code"
+      >
+        <h1 class="text-blue-600">QR will show here</h1>
+      </canvas>
+    </div>
+
+    <div
+      id="notification"
+      class="fixed top-5 right-5 bg-red-500/20 text-red-500 p-2 w-80 border-red-500 border rounded-md hidden text-sm"
+    >
+      <p class="text-red-600 font-bold" id="notification-message"></p>
+      <p id="notification-description"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <script>
+      function showNotification(message, description) {
+        const notification = document.getElementById("notification");
+        const messageContainer = document.getElementById(
+          "notification-message"
+        );
+        const messageDescription = document.getElementById(
+          "notification-description"
+        );
+        messageContainer.textContent = message;
+        messageDescription.textContent = description;
+        notification.classList.remove("hidden");
+        setTimeout(() => {
+          notification.classList.add("hidden");
+        }, 3000);
+      }
+
+      // QR Code Generator Logic
+      document
+        .getElementById("generate-btn")
+        .addEventListener("click", function () {
+          const url = document.getElementById("url-input").value;
+
+          if (url) {
+            const qr = new QRious({
+              element: document.getElementById("qr-code"),
+              size: 256,
+              value: url,
+            });
+          } else {
+            showNotification("Invalid URL", "Please enter a valid URL");
+          }
+        });
+    </script>
+  </body>
+</html>
