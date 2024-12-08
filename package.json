@@ -1,0 +1,11 @@
+{
+  "name": "qr_generator",
+  "version": "0.0.2",
+  "description": "A simple QR code generator provided a URL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "shadmeoli",
+  "license": "ISC"
+}
