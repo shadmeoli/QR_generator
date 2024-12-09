@@ -17,17 +17,11 @@ document.getElementById("generate-btn").addEventListener("click", function () {
   const url = document.getElementById("url-input").value;
   const uploadedImage = document.getElementById("dropzone-file").files[0];
 
-  // Get selected colors
-  const foregroundColor = document.getElementById("foreground-color").value;
-  const backgroundColor = document.getElementById("background-color").value;
-
   if (url) {
     const qr = new QRious({
       element: document.getElementById("qr-code"),
       size: 256,
       value: url,
-      foreground: foregroundColor,
-      background: backgroundColor,
     });
 
     // If an image is uploaded, draw it on the QR code
@@ -35,16 +29,12 @@ document.getElementById("generate-btn").addEventListener("click", function () {
       const reader = new FileReader();
 
       reader.onload = function (e) {
+        // Create a new image element
         const img = new Image();
-        img.src = e.target.result;
+        img.src = e.target.result; // Set the source to the uploaded image
 
         img.onload = function () {
-          // Check if the image is square
-          if (img.width !== img.height) {
-            showNotification("Invalid Image", "Please upload a square image.");
-            return; // Exit if the image is not square
-          }
-
+          // Get the canvas context
           const canvas = document.getElementById("qr-code");
           const ctx = canvas.getContext("2d");
 
@@ -55,7 +45,7 @@ document.getElementById("generate-btn").addEventListener("click", function () {
           const qrSize = 256; // Size of the QR code
           const imgSize = qrSize / 6; // Make the image small enough to fit in the center
 
-          // Draw the uploaded image at the center of the QR code without distortion
+          // Draw the uploaded image at the center of the QR code
           ctx.drawImage(
             img,
             (qrSize - imgSize) / 2,
@@ -63,12 +53,12 @@ document.getElementById("generate-btn").addEventListener("click", function () {
             imgSize,
             imgSize
           );
-
-          showNotification(
-            "QR Code Generated",
-            "Your QR code has been generated with the uploaded image."
-          );
         };
+
+        showNotification(
+          "QR Code Generated",
+          "Your QR code has been generated with the uploaded image."
+        );
       };
 
       reader.readAsDataURL(uploadedImage); // Read the file as a data URL
@@ -99,22 +89,11 @@ document
       }
 
       reader.onload = function (e) {
-        const img = new Image();
-        img.src = e.target.result;
-
-        img.onload = function () {
-          // Check if the uploaded image is square
-          if (img.width !== img.height) {
-            showNotification("Invalid Image", "Please upload a square image.");
-            return; // Exit if not square
-          }
-
-          // Show a notification that an image has been uploaded successfully
-          showNotification(
-            "Image Uploaded",
-            "You can now generate a QR code with this image."
-          );
-        };
+        // Show a notification that an image has been uploaded
+        showNotification(
+          "Image Uploaded",
+          "You can now generate a QR code with this image."
+        );
       };
 
       reader.readAsDataURL(file); // Read the file as a data URL
@@ -123,12 +102,22 @@ document
     }
   });
 
-// Download QR Code functionality remains unchanged
-document.getElementById("download-qr").addEventListener("click", function () {
-  const canvas = document.getElementById("qr-code");
-  const downloadLink = document.createElement("a");
-  downloadLink.download = "qr-code.png";
-  downloadLink.href = canvas.toDataURL("image/png");
+// Download QR Code
+document
+  .getElementById("download-qr")
+  .addEventListener("click", function (event) {
+    // Get the canvas element containing the QR code
+    const canvas = document.getElementById("qr-code");
 
-  downloadLink.click();
-});
+    // Create a temporary link element
+    const downloadLink = document.createElement("a");
+
+    // Set the download attribute with a filename
+    downloadLink.download = "qr-code.png";
+
+    // Convert the canvas content to a data URL
+    downloadLink.href = canvas.toDataURL("image/png");
+
+    // Simulate a click on the link to trigger the download
+    downloadLink.click();
+  });

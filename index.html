@@ -120,10 +120,10 @@
 
         <!-- QR Code Display Section -->
         <div
-          class="md:w-[30rem] bg-orange-600/10 h-96 mt-10 w-96 p-[40px] flex flex-col items-center justify-start rounded-xl"
+          class="md:w-[30rem] bg-orange-600/10 h-96 mt-10 w-96 p-[40px] flex items-center justify-center rounded-xl"
         >
           <canvas
-            class="rounded-xl border-dashed h-96 w-96 p-[16px] qr-code bg-orange-600 transition-all duration-[300ms] ease-in-out"
+            class="rounded-2xl border-dashed h-96 w-96 p-[16px] qr-code transition-all duration-[300ms] ease-in-out"
             id="qr-code"
           ></canvas>
         </div>
@@ -133,7 +133,7 @@
     <!-- Notification for Errors -->
     <div
       id="notification"
-      class="fixed top-[20px] right-[20px] bg-red-[500]/20 text-red-[500] p-[8px] w-[320px] border-red-[500] border rounded-md hidden text-sm"
+      class="fixed top-[20px] right-[20px] bg-gray-500/20 text-gray-600 p-[8px] w-[320px] border-gray-600 border rounded-md hidden text-sm"
     >
       <p class="text-red-[600] font-bold" id="notification-message"></p>
       <p id="notification-description"></p>
